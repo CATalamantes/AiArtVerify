@@ -1,6 +1,4 @@
 from pathlib import Path
-from datetime import timedelta
-import re
 import pandas as pd
 
 filePath = Path('.') / 'data' / 'youtube_trending_videos_global_daily.parquet'
@@ -32,7 +30,7 @@ data_clean['video_duration'] = pd.to_timedelta(
 data_clean['video_like_count'] = data_clean['video_like_count'].astype(int)
 data_clean['video_view_count'] = data_clean['video_view_count'].astype(int)
 data_clean['video_comment_count'] =data_clean['video_comment_count'].astype(int)
-data_clean['channel_view_count'] = data_clean['video_view_count'].astype(int)
+data_clean['channel_view_count'] = data_clean['channel_view_count'].astype(int)
 data_clean['channel_subscriber_count'] = data_clean['channel_subscriber_count'].astype(int)
 data_clean['channel_video_count'] = data_clean['channel_video_count'].astype(int)
 

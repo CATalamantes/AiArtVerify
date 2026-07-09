@@ -39,3 +39,9 @@ print(f"Top Channel Country Values \n {data['channel_country'].value_counts().he
 print(f"Top Video Country Values \n {data['video_trending_country'].value_counts().head(5)}\n")
 print(f"Top Video Categories \n {data['video_category_id'].value_counts().head(5)}")
 print("\n")
+
+
+# Find the video(s) with the absolute lowest subscription
+lowest_subs = data[data['channel_subscriber_count'] == data['channel_subscriber_count'].min()]
+print('Lowwest Subs Channel Videos')
+print(lowest_subs[['video_title', 'channel_subscriber_count']])
