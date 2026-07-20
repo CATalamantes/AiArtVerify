@@ -134,6 +134,14 @@ features["channel_sub_to_view_ratio"] = (
 features["channel_description_length"] = df["channel_description"].fillna("").str.len()
 features["channel_has_custom_url"] = df["channel_custom_url"].notna().astype(int)
 
+# Log-transform the heavily skewed channel count features (skewness ~20-40 in raw form).
+# Linear regression is very sensitive to this scale of skew — a handful of huge channels
+# would otherwise dominate the fit. Keep both raw and log versions; drop the raw ones
+# from your model inputs at training time if you don't need them.
+for col in ["channel_subscriber_count", "channel_view_count", "channel_video_count",
+            "channel_avg_views_per_video"]:
+    features[f"log_{col}"] = np.log1p(features[col])
+
 # ---------------------------------------------------------------------------
 # 8. TARGET / LABEL COLUMNS (kept separate — build your target from these,
 #    do NOT use them as model inputs)

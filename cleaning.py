@@ -9,8 +9,16 @@ print("\n")
 ################DATA CLEANING
 
 print("==== DATA CLEANING ====")
-data_clean = data.dropna()
+
+#####Dropping rows with missing values (ignoring channel_custom_url, which we don't need)
+data_clean = data.dropna(subset=[c for c in data.columns if c != 'channel_custom_url'])
 print(f"Original rows: {data.shape[0]} | Clean rows: {data_clean.shape[0]}")
+
+#####Removing duplicate videos (same video trending in multiple countries on the same day
+#####has identical stats copied across rows — keep only the first occurrence per video)
+before_dedup = data_clean.shape[0]
+data_clean = data_clean.drop_duplicates(subset='video_id', keep='first')
+print(f"Rows before dedup: {before_dedup} | Rows after dedup: {data_clean.shape[0]} | Removed: {before_dedup - data_clean.shape[0]}")
 
 #####Converting date strings to datetime object
 data_clean['video_published_at'] = pd.to_datetime(data_clean['video_published_at'])
@@ -26,12 +34,13 @@ data_clean['video_duration'] = pd.to_timedelta(
         .str.replace('H', 'h', regex=False)
         .str.replace('M', 'm', regex=False)
         .str.replace('S', 's', regex=False))
+
 #####Converting strings to ints
 data_clean['video_like_count'] = data_clean['video_like_count'].astype(int)
 data_clean['video_view_count'] = data_clean['video_view_count'].astype(int)
-data_clean['video_comment_count'] =data_clean['video_comment_count'].astype(int)
+data_clean['video_comment_count'] = data_clean['video_comment_count'].astype(int)
 data_clean['channel_view_count'] = data_clean['channel_view_count'].astype(int)
 data_clean['channel_subscriber_count'] = data_clean['channel_subscriber_count'].astype(int)
 data_clean['channel_video_count'] = data_clean['channel_video_count'].astype(int)
 
-data_clean.to_csv(r"C:\Users\rahma\OneDrive\Documents\YT\cleaned_data.csv", index=False)
+
