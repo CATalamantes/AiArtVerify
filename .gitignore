@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+
+# IDE
+.idea/
+
+# Large data files
+data/
+data_canerkonuk*/
+
+# Large model artifacts (100MB+ each)
+models/*.pkl
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
