@@ -1,0 +1,22 @@
+[
+  "tag_count",
+  "title_length",
+  "title_has_caps_word",
+  "publish_hour",
+  "publish_dayofweek",
+  "days_to_trend",
+  "video_category_id_Comedy",
+  "video_category_id_Education",
+  "video_category_id_Entertainment",
+  "video_category_id_Film & Animation",
+  "video_category_id_Gaming",
+  "video_category_id_Howto & Style",
+  "video_category_id_Music",
+  "video_category_id_News & Politics",
+  "video_category_id_Nonprofits & Activism",
+  "video_category_id_People & Blogs",
+  "video_category_id_Pets & Animals",
+  "video_category_id_Science & Technology",
+  "video_category_id_Sports",
+  "video_category_id_Travel & Events"
+]
