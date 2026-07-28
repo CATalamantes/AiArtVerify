@@ -1,16 +1,16 @@
 /* Thin fetch wrappers around the FastAPI backend.
 
-   Change API_BASE_URL to the deployed Hugging Face Space before publishing
-   this to GitHub Pages -- e.g. "https://<user>-hitorflop.hf.space". Left as
-   localhost for local development against `uvicorn api:app --reload`.
+   Change API_BASE_URL to the deployed Vercel project URL before publishing
+   this to GitHub Pages -- e.g. "https://hitorflop-backend.vercel.app". Left
+   as localhost for local development against `uvicorn api:app --reload`.
 */
 
 const API_BASE_URL = (() => {
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
     return "http://localhost:8000";
   }
-  // TODO: set this to your deployed Hugging Face Space URL before publishing.
-  return "https://YOUR-USERNAME-hitorflop.hf.space";
+  // TODO: set this to your deployed Vercel project URL before publishing.
+  return "https://YOUR-PROJECT-NAME.vercel.app";
 })();
 
 const Api = {
