@@ -13,10 +13,18 @@ print(f"Loaded {len(df):,} rows, {df.shape[1]} columns")
 # ---------------------------------------------------------------------------
 # 1. DEFINE TARGET
 # ---------------------------------------------------------------------------
-# view_count is heavily right-skewed (a few viral videos dominate) — log-transform it
-# so linear regression isn't distorted by outliers.
-df["log_target_view_count"] = np.log1p(df["_target_view_count"])
-target_col = "log_target_view_count"
+# We predict engagement rate — (likes + comments) / views — not raw view count.
+# Raw views conflate "how far the algorithm/subscriber base pushed this" with
+# "how good was the video," which isn't what an advisor app should be scoring.
+# Engagement rate is a bounded ratio, so we don't assume it needs a log transform
+# the way an unbounded count would — we check its actual distribution first.
+target_col = "_target_engagement_rate"
+
+print("\n==== TARGET DISTRIBUTION CHECK ====")
+print(df[target_col].describe())
+print(f"Skewness: {df[target_col].skew():.3f}")
+print("(Skewness near 0 = roughly symmetric. Above ~1 = notably right-skewed, "
+      "worth considering a transform before Linear Regression.)")
 
 # ---------------------------------------------------------------------------
 # 2. GROUP HIGH-CARDINALITY CATEGORICALS BEFORE ONE-HOT ENCODING
@@ -43,7 +51,7 @@ drop_cols = [
     "channel_subscriber_count", "channel_view_count",
     "channel_video_count", "channel_avg_views_per_video",
     "_target_view_count", "_target_like_count", "_target_comment_count",
-    "_target_engagement_rate", "log_target_view_count",
+    "_target_engagement_rate",
 ]
 feature_df = df.drop(columns=drop_cols)
 

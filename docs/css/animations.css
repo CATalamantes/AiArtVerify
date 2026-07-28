@@ -1,0 +1,25 @@
+/* Scroll-reveal: only the form is visible on load. Submitting reveals the
+   results section and scrolls it to the top of the viewport, so the verdict
+   number + gauge become center stage -- matching the reference mockup's
+   form -> result transition. */
+
+.results-section {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.results-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.form-section {
+  transition: opacity 0.3s ease;
+}
+
+.form-section.is-collapsed {
+  opacity: 0.55;
+}

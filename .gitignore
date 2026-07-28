@@ -1,0 +1,19 @@
+# virtualenvs
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# raw source data (not redistributable; see README)
+data/
+
+# legacy v1 pipeline artifacts -- trained_models.pkl is 41 MB and Streamlit
+# Cloud re-clones the repo on every deploy
+preprocessed.pkl
+trained_models.pkl
+
+# intermediate; rebuild with `python build_features.py`
+features_v2.csv
+
+.streamlit/secrets.toml
+.DS_Store

@@ -1,0 +1,173 @@
+{
+  "n_rows": 6668,
+  "base_rate": 0.25,
+  "cv_folds": 5,
+  "gate_a": {
+    "auc_full": 0.8487552639442117,
+    "auc_without_channel": 0.7522661034679686,
+    "auc_gain": 0.09648916047624312,
+    "threshold": 0.03,
+    "keep_channel_features": true
+  },
+  "gate_b": {
+    "auc_content_only": 0.7305146049374408,
+    "threshold": 0.58,
+    "model_advice_is_meaningful": true
+  },
+  "classifier": {
+    "headline": {
+      "auc": 0.8487552639442117,
+      "brier": 0.13301884501523165,
+      "accuracy": 0.8047390521895621,
+      "confusion_matrix": {
+        "tn": 4759,
+        "fp": 242,
+        "fn": 1060,
+        "tp": 607
+      },
+      "n_features": 37
+    },
+    "content_only": {
+      "auc": 0.7305146049374408,
+      "brier": 0.16501539691855352,
+      "accuracy": 0.7586982603479304,
+      "confusion_matrix": {
+        "tn": 4961,
+        "fp": 40,
+        "fn": 1569,
+        "tp": 98
+      },
+      "n_features": 27
+    },
+    "baseline_auc": 0.49956013596320925
+  },
+  "regressors": {
+    "views": {
+      "r2": 0.6911803422776526,
+      "mae": 0.7454421404417106,
+      "n_features": 37,
+      "median_ratio_error": 1.8323357513201546,
+      "baseline": {
+        "r2": -0.000617687022794744,
+        "mae": 1.3963193165827466
+      }
+    },
+    "likes": {
+      "r2": 0.5703241619178578,
+      "mae": 0.8359520354361466,
+      "n_features": 37,
+      "median_ratio_error": 1.9482373586889312,
+      "baseline": {
+        "r2": -0.0005737277172013222,
+        "mae": 1.313730205359608
+      }
+    },
+    "comments": {
+      "r2": 0.5524595336778577,
+      "mae": 1.0382129166227543,
+      "n_features": 37,
+      "median_ratio_error": 2.3611294897351196,
+      "baseline": {
+        "r2": -0.00026285074172771594,
+        "mae": 1.5863613879759195
+      }
+    }
+  },
+  "linear_engagement": {
+    "r2": 0.2628419262576358,
+    "mae": 0.024309216878908222,
+    "n_features": 37,
+    "baseline": {
+      "r2": -5.569913835867801e-05,
+      "mae": 0.029794353972499733
+    }
+  },
+  "top_importances": [
+    [
+      "num__log_channel_avg_views_per_video",
+      0.17874910104151373
+    ],
+    [
+      "num__log_channel_subscriber_count",
+      0.16583292186213935
+    ],
+    [
+      "num__log_channel_view_count",
+      0.09212480179773454
+    ],
+    [
+      "num__channel_sub_to_view_ratio",
+      0.07559838422624814
+    ],
+    [
+      "num__hours_since_publish",
+      0.05862802739094871
+    ],
+    [
+      "num__log_channel_video_count",
+      0.04424678568696092
+    ],
+    [
+      "num__channel_age_days_at_publish",
+      0.03754165268049816
+    ],
+    [
+      "num__duration_seconds",
+      0.0364987402168026
+    ],
+    [
+      "num__title_uppercase_ratio",
+      0.02612468475244865
+    ],
+    [
+      "num__channel_description_length",
+      0.02513153078544061
+    ],
+    [
+      "num__description_url_count",
+      0.024703351148089976
+    ],
+    [
+      "num__description_word_count",
+      0.023140728404546878
+    ],
+    [
+      "num__publish_hour",
+      0.02303565673753323
+    ],
+    [
+      "num__description_length_chars",
+      0.02298345193848057
+    ],
+    [
+      "num__title_length_chars",
+      0.021147375078750214
+    ],
+    [
+      "num__description_line_count",
+      0.020156171642361765
+    ],
+    [
+      "num__tag_count",
+      0.016735789621026075
+    ],
+    [
+      "num__publish_day_of_week",
+      0.016705118687689507
+    ],
+    [
+      "num__title_word_count",
+      0.013537829716486191
+    ],
+    [
+      "cat__channel_country_grouped_Other",
+      0.008592905637162494
+    ]
+  ],
+  "rf_params": {
+    "n_estimators": 150,
+    "max_depth": 12,
+    "min_samples_leaf": 10,
+    "random_state": 42
+  }
+}
