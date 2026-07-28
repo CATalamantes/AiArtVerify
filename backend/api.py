@@ -198,3 +198,14 @@ def post_predict(req: PredictRequest):
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+@app.get("/")
+def root():
+    """Landing response for the bare domain -- points visitors at /docs
+    instead of a bare 404, since this API has no root page of its own."""
+    return {
+        "service": "Hit or Flop API",
+        "docs": "/docs",
+        "health": "/health",
+    }
