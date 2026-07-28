@@ -9,8 +9,7 @@ const API_BASE_URL = (() => {
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
     return "http://localhost:8000";
   }
-  // TODO: set this to your deployed Vercel project URL before publishing.
-  return "https://YOUR-PROJECT-NAME.vercel.app";
+  return "https://hit-or-flop-lovat.vercel.app";
 })();
 
 const Api = {
