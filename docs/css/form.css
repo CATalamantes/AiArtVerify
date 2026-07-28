@@ -1,0 +1,176 @@
+.form-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+}
+
+.field { margin-bottom: 1.1rem; }
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+.field-row .field { margin-bottom: 0; }
+
+@media (max-width: 560px) {
+  .field-row { grid-template-columns: 1fr; }
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  margin-bottom: 0.4rem;
+}
+
+textarea { resize: vertical; }
+
+input[type="range"] {
+  padding: 0;
+  height: 6px;
+  background: var(--grid);
+  border: none;
+  accent-color: var(--violet);
+}
+
+#publish-hour-value {
+  color: var(--violet);
+  font-weight: 700;
+}
+
+/* Segmented control (horizon picker) */
+.segmented {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.segmented-option {
+  flex: 1;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--ink-2);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.segmented-option.is-selected {
+  background: var(--violet-wash);
+  border-color: var(--violet);
+  color: var(--violet);
+}
+
+/* Tag chip picker */
+.chip-pool, .chip-selected {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip-pool { margin-bottom: 0.5rem; }
+.chip-selected { margin-top: 0.5rem; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--ink-2);
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.chip:hover {
+  border-color: var(--border-strong);
+}
+
+.chip.is-selected {
+  background: var(--violet-wash);
+  border-color: var(--violet);
+  color: var(--violet);
+}
+
+.chip .chip-lift {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+.chip.is-selected .chip-lift { color: var(--violet); opacity: 0.8; }
+
+.chip-remove {
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+/* Submit button -- the one place a gradient makes sense; pure UI chrome,
+   not a data encoding, so it isn't run through the palette validator. */
+.submit-btn {
+  position: relative;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.95rem 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--violet) 0%, var(--violet-deep) 100%);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 24px -8px rgba(144, 133, 233, 0.55);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.submit-btn:hover { transform: translateY(-1px); }
+.submit-btn:active { transform: translateY(0); }
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.submit-spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  margin-left: 0.6rem;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  vertical-align: -3px;
+  animation: spin 0.7s linear infinite;
+}
+
+.submit-btn.is-loading .submit-spinner { display: inline-block; }
+.submit-btn.is-loading .submit-label { opacity: 0.85; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.form-error {
+  color: var(--critical);
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+.edit-again-btn {
+  display: block;
+  margin: 2rem auto 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--ink-2);
+  border-radius: 999px;
+  padding: 0.55rem 1.2rem;
+  font-size: 0.85rem;
+}
+.edit-again-btn:hover { border-color: var(--border-strong); color: var(--ink); }

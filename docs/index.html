@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hit or Flop — will your video hit or flop?</title>
+<meta name="description" content="A pre-publish YouTube performance predictor trained on 6,668 videos that all made Trending.">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/form.css">
+<link rel="stylesheet" href="css/results.css">
+<link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand">
+    <span class="badge">YouTube performance predictor</span>
+    <h1 class="title">Will your video <span class="accent">hit</span> or <span class="accent-flop">flop</span>?</h1>
+    <p class="tagline">
+      Scored against 6,668 videos that all made YouTube Trending — so average here is elite
+      everywhere else. Fill in what you've got, see where you'd land.
+    </p>
+  </header>
+
+  <!-- ===================== INPUT (visible on load) ===================== -->
+  <section id="form-section" class="form-section">
+    <form id="video-form" novalidate>
+
+      <div class="field">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" maxlength="200"
+               placeholder="I Survived 100 Days in RANDOM Minecraft" required>
+      </div>
+
+      <div class="field">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="3"
+                  placeholder="What's the video about? Links, timestamps, whatever you'd normally put here."></textarea>
+      </div>
+
+      <div class="field">
+        <label>Tags</label>
+        <div id="tag-chip-pool" class="chip-pool" aria-live="polite"></div>
+        <input id="tags-custom" type="text" placeholder="add your own, comma separated">
+        <div id="tag-chip-selected" class="chip-selected"></div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category" name="category" required></select>
+        </div>
+        <div class="field">
+          <label for="duration">Length (minutes)</label>
+          <input id="duration" name="duration" type="number" min="0.2" max="600" step="0.5" value="10">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="publish-date">Publish date</label>
+          <input id="publish-date" name="publish_date" type="date" required>
+        </div>
+        <div class="field">
+          <label for="publish-hour">Publish hour <span id="publish-hour-value">17:00</span> UTC</label>
+          <input id="publish-hour" name="publish_hour" type="range" min="0" max="23" value="17">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Predict performance at</label>
+        <div class="segmented" role="radiogroup" id="horizon-group">
+          <button type="button" class="segmented-option" data-value="24">24 hours</button>
+          <button type="button" class="segmented-option is-selected" data-value="48">48 hours</button>
+          <button type="button" class="segmented-option" data-value="168">7 days</button>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="field">
+        <label for="channel-size">Channel size</label>
+        <select id="channel-size" name="channel_size"></select>
+        <p class="hint">Channel size is worth real accuracy to the model — measured, not assumed.</p>
+      </div>
+
+      <div id="custom-channel-fields" class="field-row hidden">
+        <div class="field">
+          <label for="subscribers">Subscribers</label>
+          <input id="subscribers" type="number" min="0" step="100" value="100000">
+        </div>
+        <div class="field">
+          <label for="channel-views">Channel total views</label>
+          <input id="channel-views" type="number" min="0" step="1000" value="18000000">
+        </div>
+        <div class="field">
+          <label for="channel-videos">Videos published</label>
+          <input id="channel-videos" type="number" min="0" step="1" value="220">
+        </div>
+        <div class="field">
+          <label for="channel-age">Channel age (days)</label>
+          <input id="channel-age" type="number" min="0" step="1" value="1200">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="channel-country">Where are you based?</label>
+        <select id="channel-country" name="channel_country"></select>
+        <p class="hint">Used as a proxy for where your core audience likely sits.</p>
+      </div>
+
+      <button type="submit" id="submit-btn" class="submit-btn">
+        <span class="submit-label">Get my result</span>
+        <span class="submit-spinner" aria-hidden="true"></span>
+      </button>
+      <p id="form-error" class="form-error hidden"></p>
+    </form>
+  </section>
+
+  <!-- ===================== RESULTS (hidden until submit) ===================== -->
+  <section id="results-section" class="results-section hidden">
+
+    <div class="verdict-row">
+      <div class="verdict-card">
+        <div class="verdict-number" id="verdict-number">--</div>
+        <div class="verdict-band" id="verdict-band">—</div>
+        <p class="verdict-sub">
+          chance of landing in the <b>top 25%</b> of trending<br>
+          a typical trending video scores <span id="base-rate-inline">25</span>
+        </p>
+      </div>
+      <div class="gauge-card">
+        <svg id="gauge-svg" viewBox="0 0 300 170" aria-label="Hit score gauge"></svg>
+        <p class="chart-note">White tick = where an average trending video sits.</p>
+      </div>
+    </div>
+
+    <div class="tiles-row" id="tiles-row"></div>
+
+    <div class="chart-card full-width">
+      <h3>Where you land against 6,668 trending videos</h3>
+      <svg id="histogram-svg" viewBox="0 0 480 220" aria-label="Distribution of views across all trending videos"></svg>
+      <p class="chart-note">Every video here already made Trending — this is the pack you're scored against.</p>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>Predicted view growth</h3>
+        <svg id="growth-svg" viewBox="0 0 480 220" aria-label="Predicted view growth curve"></svg>
+        <p class="chart-note">Views projected across the first week after publishing.</p>
+      </div>
+      <div class="chart-card">
+        <h3>Best time to publish</h3>
+        <svg id="heatmap-svg" viewBox="0 0 480 220" aria-label="Best time to publish heatmap"></svg>
+        <p class="chart-note" id="best-time-note"></p>
+      </div>
+    </div>
+
+    <div class="narrative-card">
+      <h3>What's driving this</h3>
+      <ul id="narrative-list" class="narrative-list"></ul>
+    </div>
+
+    <div class="advice-grid">
+      <div class="advice-card">
+        <h3>How to improve it</h3>
+        <div id="advice-list" class="advice-list"></div>
+        <p class="chart-note">
+          Correlations among videos that already trended, not causal guarantees — each tip is
+          confirmed against real data before it shows up here.
+        </p>
+      </div>
+
+      <div class="side-col">
+        <div class="tags-card">
+          <h3>Tags you're missing</h3>
+          <div id="missing-tags-chips" class="chip-pool"></div>
+        </div>
+        <div class="category-card">
+          <h3>Best category for this</h3>
+          <svg id="category-svg" viewBox="0 0 300 200" aria-label="Best category fit"></svg>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" id="edit-again-btn" class="edit-again-btn">Edit and try again</button>
+  </section>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/form.js"></script>
+<script src="js/results.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
