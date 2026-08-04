@@ -8,16 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("video-form").addEventListener("submit", onSubmit);
   document.getElementById("edit-again-btn").addEventListener("click", onEditAgain);
-
-  // Nav/hero CTAs that link to #predictor also carry data-focus="title" --
-  // after the anchor scroll lands, put the cursor straight into the title
-  // field so "Try it free" actually starts the form instead of just scrolling to it.
-  document.querySelectorAll("[data-focus]").forEach((el) => {
-    el.addEventListener("click", () => {
-      const field = document.getElementById(el.dataset.focus);
-      window.setTimeout(() => field && field.focus({ preventScroll: true }), 550);
-    });
-  });
 });
 
 async function onSubmit(e) {
