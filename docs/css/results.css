@@ -27,6 +27,8 @@
 }
 
 .verdict-number {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 4rem;
   font-weight: 800;
   line-height: 1;
@@ -46,6 +48,12 @@
   font-size: 0.8rem;
   margin-top: 0.65rem;
   line-height: 1.5;
+}
+
+.verdict-sub #base-rate-inline {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--ink);
 }
 
 .gauge-card svg { width: 100%; height: auto; }
@@ -84,6 +92,8 @@
 }
 
 .tile-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 1.55rem;
   font-weight: 700;
   color: var(--ink);

@@ -5,203 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hit or Flop — will your video hit or flop?</title>
 <meta name="description" content="A pre-publish YouTube performance predictor trained on 6,668 videos that all made Trending.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/form.css">
 <link rel="stylesheet" href="css/results.css">
 <link rel="stylesheet" href="css/animations.css">
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/landing.css">
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="site-nav-inner">
-    <a href="#home" class="brand-mark"><span class="brand-mark-dot"></span>Hit or Flop</a>
-    <div class="nav-links">
-      <a href="#how-it-works">How it works</a>
-      <a href="#data">The data</a>
-      <a href="#predictor">Predictor</a>
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow">Pre-publish YouTube performance predictor</span>
+      <h1 class="hero-title">Know if it's a hit<br>before you hit publish.</h1>
+      <p class="hero-sub">
+        Hit or Flop scores your video against 6,668 videos that already made YouTube Trending.
+        It won't tell you if you'll go viral — nothing can, from this data. It tells you whether
+        you'd top that pack or scrape the bottom of it.
+      </p>
+      <div class="hero-actions">
+        <a href="#predictor" class="btn btn-primary" data-focus="title">Try the Predictor</a>
+        <a href="#methodology" class="btn btn-ghost">How it works</a>
+      </div>
     </div>
-    <a href="#predictor" class="nav-cta" data-focus="title">Try it free</a>
+    <div class="hero-chart-wrap" aria-hidden="true">
+      <svg id="hero-chart-svg" viewBox="0 0 520 380" preserveAspectRatio="none"></svg>
+    </div>
   </div>
-</nav>
+</header>
 
-<div class="page">
-
-  <!-- ===================== HOME ===================== -->
-  <header class="brand" id="home">
-    <span class="badge">YouTube performance predictor</span>
-    <h1 class="title">Will your video <span class="accent">hit</span> or <span class="accent-flop">flop</span>?</h1>
-    <p class="tagline">
-      Scored against 6,668 videos that all made YouTube Trending — so average here is elite
-      everywhere else. Fill in what you've got, see where you'd land.
-    </p>
-
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <span class="hero-stat-value">6,668</span>
-        <span class="hero-stat-label">trending videos scored</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-value">109</span>
-        <span class="hero-stat-label">countries represented</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-value">0.849</span>
-        <span class="hero-stat-label">hit classifier AUC</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-value">25%</span>
-        <span class="hero-stat-label">base hit rate</span>
-      </div>
-    </div>
-
-    <div class="hero-actions">
-      <a href="#predictor" class="cta-primary" data-focus="title">Try it free</a>
-      <a href="#how-it-works" class="cta-secondary">See how it works</a>
-    </div>
-  </header>
-
-  <!-- ===================== HOW IT WORKS ===================== -->
-  <section id="how-it-works" class="site-section">
-    <div class="section-head">
-      <span class="badge">How it works</span>
-      <h2 class="section-title">Five decisions behind the number</h2>
-      <p class="section-sub">
-        No black box hand-waving — this is the actual pipeline, in the order the decisions were made.
-      </p>
-    </div>
-
-    <ol class="steps">
-      <li class="step">
-        <div class="step-num">1</div>
-        <div>
-          <div class="step-title">Trained on a leaderboard of winners</div>
-          <div class="step-body">
-            6,668 videos that already made YouTube Trending, across 109 countries, on a single snapshot day.
-            There's no negative class in that data — so the question isn't "will you go viral," it's
-            whether you'd top that pack or scrape the bottom of it.
-          </div>
-        </div>
-      </li>
-      <li class="step">
-        <div class="step-num">2</div>
-        <div>
-          <div class="step-title">Two models, two jobs</div>
-          <div class="step-body">
-            A Random Forest scores your hit probability and predicts views, likes and comments. A Linear
-            Regression model runs alongside purely to explain <em>why</em> — its coefficients are easy to
-            read, which is what powers the plain-English "what's driving this" panel below.
-          </div>
-        </div>
-      </li>
-      <li class="step">
-        <div class="step-num">3</div>
-        <div>
-          <div class="step-title">Two gates decided what shipped</div>
-          <div class="step-body">
-            Gate A measured whether channel size earns its place in the model — it added +0.10 AUC, so
-            the form asks for it. Gate B measured whether content alone carries real signal — it scored
-            0.73 AUC against a 0.58 bar, so the advice panel is real, not invented.
-          </div>
-        </div>
-      </li>
-      <li class="step">
-        <div class="step-num">4</div>
-        <div>
-          <div class="step-title">Every tip is cross-checked twice</div>
-          <div class="step-body">
-            A recommendation only appears if a model counterfactual <em>and</em> the raw empirical
-            hit-rate agree on direction, with at least 40 real videos backing it. Disagreement, or too
-            little data, means the tip gets dropped — an empty list is a valid, honest answer.
-          </div>
-        </div>
-      </li>
-      <li class="step">
-        <div class="step-num">5</div>
-        <div>
-          <div class="step-title">A leak, turned into a feature</div>
-          <div class="step-body">
-            Video age at measurement time used to be a hidden shortcut the model leaned on. It's now
-            exposed as a horizon you control — "predicted views at 24h / 48h / 7 days" — so the growth
-            curve below is that same number, working for you instead of against you.
-          </div>
-        </div>
-      </li>
-    </ol>
-  </section>
-
-  <!-- ===================== THE DATA ===================== -->
-  <section id="data" class="site-section">
-    <div class="section-head">
-      <span class="badge">The data</span>
-      <h2 class="section-title">What it's scored against — honestly described</h2>
-      <p class="section-sub">
-        The pack you're compared to, and what this data genuinely can't tell you.
-      </p>
-    </div>
-
-    <div class="data-tiles">
-      <div class="tile">
-        <div class="tile-label">Videos</div>
-        <div class="tile-value">6,668</div>
-      </div>
-      <div class="tile">
-        <div class="tile-label">Countries</div>
-        <div class="tile-value">109</div>
-      </div>
-      <div class="tile">
-        <div class="tile-label">Snapshot</div>
-        <div class="tile-value">1 day</div>
-      </div>
-      <div class="tile">
-        <div class="tile-label">Base hit rate</div>
-        <div class="tile-value">25%</div>
-      </div>
-    </div>
-
-    <div class="data-bars">
-      <div class="data-bar-row">
-        <span class="data-bar-label">Gaming</span>
-        <span class="data-bar-track"><span class="data-bar-fill" style="width:100%"></span></span>
-        <span class="data-bar-value">3,895</span>
-      </div>
-      <div class="data-bar-row">
-        <span class="data-bar-label">Music</span>
-        <span class="data-bar-track"><span class="data-bar-fill" style="width:43.2%"></span></span>
-        <span class="data-bar-value">1,684</span>
-      </div>
-      <div class="data-bar-row">
-        <span class="data-bar-label">Pets &amp; Animals</span>
-        <span class="data-bar-track"><span class="data-bar-fill" style="width:0.5%"></span></span>
-        <span class="data-bar-value">1</span>
-      </div>
-    </div>
-    <p class="data-bars-note">
-      Plus 15 more categories in between. Category imbalance is real and severe — charts and advice
-      here suppress any category with fewer than 30 examples rather than pretend they're reliable.
-    </p>
-
-    <div class="limits-card">
-      <h3>What this data can't tell you</h3>
-      <ul class="limits-list">
-        <li><b>Every training row already trended.</b> This ranks you <em>within</em> winners — it can't
-          tell you whether you'll break into Trending at all.</li>
-        <li><b>One snapshot day,</b> publish dates spanning ~37 days. No seasonality is learnable.</li>
-        <li><b>Correlation, not causation.</b> Suggestions describe what co-occurs with high placement,
-          not what causes it.</li>
-        <li><b>No thumbnail, no audio, no watch-time</b> — probably the three biggest real drivers,
-          absent from the dataset entirely.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ===================== PREDICTOR ===================== -->
-  <div id="predictor" class="predictor-block">
-    <div class="section-head">
-      <span class="badge">Try it for free</span>
-      <h2 class="section-title">Score your next upload</h2>
-      <p class="section-sub">No sign-up, no cost — fill in what you've got and see exactly where you'd land.</p>
-    </div>
+<!-- ===================== PREDICTOR ===================== -->
+<section id="predictor" class="section predictor-section">
+  <div class="section-inner">
 
     <!-- ===================== INPUT (visible on load) ===================== -->
     <section id="form-section" class="form-section">
@@ -366,15 +205,9 @@
 
       <button type="button" id="edit-again-btn" class="edit-again-btn">Edit and try again</button>
     </section>
+
   </div>
-
-  <footer class="site-footer">
-    <p>Built as a data-honesty exercise, not a growth-hacking tool — every number here is
-      5-fold cross-validated, and every modeling decision is written up in the project README.</p>
-    <p class="site-footer-links"><a href="https://github.com/CATalamantes/HitOrFlop" target="_blank" rel="noopener">View source on GitHub</a></p>
-  </footer>
-
-</div>
+</section>
 
 <script src="js/api.js"></script>
 <script src="js/charts.js"></script>

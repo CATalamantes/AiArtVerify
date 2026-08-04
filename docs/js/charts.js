@@ -184,6 +184,35 @@ function renderViewsHistogram(svg, { distLogViews, myViews, nBins = 24 }) {
 }
 
 /* ------------------------------------------------------------------------ */
+/* Ghost histogram: the same view-count distribution as renderViewsHistogram, */
+/* stripped to bare bars (no axis, no marker) for the hero background --    */
+/* real data rendered low-opacity via CSS, not decorative illustration.     */
+/* ------------------------------------------------------------------------ */
+function renderGhostHistogram(svg, distLogViews, nBins = 40) {
+  clearSvg(svg);
+  if (!distLogViews || !distLogViews.length) return;
+  const W = 520, H = 380;
+
+  const xMin = Math.min(...distLogViews), xMax = Math.max(...distLogViews);
+  const binWidth = (xMax - xMin) / nBins;
+  const counts = new Array(nBins).fill(0);
+  distLogViews.forEach((v) => {
+    const i = Math.min(nBins - 1, Math.max(0, Math.floor((v - xMin) / binWidth)));
+    counts[i]++;
+  });
+  const maxCount = Math.max(...counts);
+
+  const barW = W / nBins;
+  counts.forEach((c, i) => {
+    const h = (c / maxCount) * H;
+    svg.appendChild(svgEl("rect", {
+      x: i * barW + 0.6, y: H - h, width: Math.max(barW - 1.2, 1), height: h,
+      fill: "#ffffff",
+    }));
+  });
+}
+
+/* ------------------------------------------------------------------------ */
 /* Growth curve: area + line, hours (x) vs predicted views (y)              */
 /* ------------------------------------------------------------------------ */
 function renderGrowthCurve(svg, { hours, views, horizonHours }) {

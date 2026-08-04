@@ -1,0 +1,164 @@
+/* New landing-page structure around the existing predictor.
+   Reuses every token from base.css (colors, radius, font) -- nothing here
+   redefines a color. Sections are full-bleed with their own background;
+   .section-inner is the 880px reading width used throughout the old page,
+   kept identical so the predictor form doesn't change proportions.
+
+   Design direction: dark, techy/analytics-dashboard (Stripe/Linear), flat
+   solid accents -- no gradients, no glow/blur shadows. */
+
+.section-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.section {
+  padding: 4.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+/* Grayscale by design -- purple is spent entirely on the primary action and
+   active-toggle states, so a label pill doesn't compete with it. */
+.eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+}
+
+.section-head {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 2.5rem;
+}
+
+.section-title {
+  font-size: clamp(1.6rem, 4vw, 2.15rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin-top: 0.9rem;
+  color: var(--ink);
+}
+
+.section-sub {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-top: 0.75rem;
+}
+
+/* Flat buttons -- solid fill, sharp corners, no gradient, no glow. Hover is
+   a brightness shift, never a shadow bloom. */
+.btn {
+  display: inline-block;
+  padding: 0.85rem 1.7rem;
+  border-radius: var(--radius-sharp);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, filter 0.15s;
+}
+
+.btn-primary {
+  background: var(--violet-deep);
+  color: #ffffff;
+}
+.btn-primary:hover { filter: brightness(1.15); }
+
+/* Secondary action stays grayscale even on hover -- purple is reserved for
+   the one primary action per screen. */
+.btn-ghost {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--ink-2);
+}
+.btn-ghost:hover { border-color: var(--ink-2); color: var(--ink); }
+
+/* ---------------------------------------------------------------------- */
+/* Hero -- asymmetric: copy left, a real (ghost, low-opacity) histogram of  */
+/* the actual view-count distribution bleeding in from the right, instead  */
+/* of decorative grid/gradient chrome. Background is just --page --        */
+/* solid near-black, no separate hero-only shade.                          */
+/* ---------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  padding: 6rem 1.25rem 5.5rem;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 620px;
+  text-align: left;
+}
+
+.hero-title {
+  font-size: clamp(2.3rem, 5.4vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 1.2rem 0 1.3rem;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.hero-sub {
+  color: var(--ink-2);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 54ch;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 2.3rem;
+}
+
+/* The ghost chart: absolutely positioned, bleeding off the right edge,
+   behind the copy z-order-wise. Real data (dist_log_views from /reference),
+   rendered by charts.js's renderGhostHistogram -- not an illustration. */
+.hero-chart-wrap {
+  position: absolute;
+  top: -1rem;
+  bottom: -1rem;
+  right: -3rem;
+  width: 56%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-chart-wrap svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.16;
+}
+
+@media (max-width: 860px) {
+  .hero-chart-wrap { display: none; }
+}
+
+@media (max-width: 560px) {
+  .hero { padding: 4.5rem 1.25rem 3.25rem; }
+}

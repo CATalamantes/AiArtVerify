@@ -4,7 +4,9 @@
    the verdict number + gauge become center stage. */
 
 document.addEventListener("DOMContentLoaded", () => {
-  initForm().catch((err) => showFormError(`Couldn't reach the backend: ${err.message}`));
+  initForm()
+    .then(renderHeroChart)
+    .catch((err) => showFormError(`Couldn't reach the backend: ${err.message}`));
 
   document.getElementById("video-form").addEventListener("submit", onSubmit);
   document.getElementById("edit-again-btn").addEventListener("click", onEditAgain);
@@ -85,4 +87,12 @@ function showFormError(message) {
 
 function clearFormError() {
   document.getElementById("form-error").classList.add("hidden");
+}
+
+// Draws the hero's ambient background chart from the same dist_log_views
+// array form.js already fetched into App.reference -- no extra API call.
+function renderHeroChart() {
+  const svg = document.getElementById("hero-chart-svg");
+  if (!svg || !window.App || !App.reference) return;
+  renderGhostHistogram(svg, App.reference.dist_log_views);
 }

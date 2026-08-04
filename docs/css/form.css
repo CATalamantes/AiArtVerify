@@ -29,17 +29,20 @@ label {
 
 textarea { resize: vertical; }
 
+/* Grayscale -- this is an input control, not the primary action, so it
+   doesn't get the accent color. */
 input[type="range"] {
   padding: 0;
   height: 6px;
   background: var(--grid);
   border: none;
-  accent-color: var(--violet);
+  accent-color: var(--ink-2);
 }
 
 #publish-hour-value {
-  color: var(--violet);
-  font-weight: 700;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-weight: 600;
 }
 
 /* Segmented control (horizon picker) */
@@ -53,17 +56,19 @@ input[type="range"] {
   background: var(--surface-2);
   border: 1px solid var(--border);
   color: var(--ink-2);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-sharp);
   padding: 0.55rem 0.5rem;
   font-size: 0.88rem;
   font-weight: 600;
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 
+/* Solid fill, not a translucent glow-outline -- this IS an active-toggle
+   state, so it's the one place besides the submit button that keeps purple. */
 .segmented-option.is-selected {
-  background: var(--violet-wash);
+  background: var(--violet);
   border-color: var(--violet);
-  color: var(--violet);
+  color: #ffffff;
 }
 
 /* Tag chip picker */
@@ -111,26 +116,25 @@ input[type="range"] {
   opacity: 0.7;
 }
 
-/* Submit button -- the one place a gradient makes sense; pure UI chrome,
-   not a data encoding, so it isn't run through the palette validator. */
+/* The one purple element in the whole form -- flat solid fill, sharp
+   corners, no gradient, no glow. Hover is a brightness shift, not a shadow
+   bloom, so it stays legible as "the button" rather than "the AI button". */
 .submit-btn {
   position: relative;
   width: 100%;
   margin-top: 1.5rem;
   padding: 0.95rem 1rem;
   border: none;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--violet) 0%, var(--violet-deep) 100%);
+  border-radius: var(--radius-sharp);
+  background: var(--violet-deep);
   color: #ffffff;
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  box-shadow: 0 8px 24px -8px rgba(144, 133, 233, 0.55);
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: filter 0.15s;
 }
 
-.submit-btn:hover { transform: translateY(-1px); }
-.submit-btn:active { transform: translateY(0); }
+.submit-btn:hover { filter: brightness(1.15); }
 
 .submit-btn:disabled {
   opacity: 0.7;

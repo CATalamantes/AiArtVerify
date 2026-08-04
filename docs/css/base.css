@@ -9,18 +9,21 @@
 :root {
   color-scheme: dark;
 
-  --page: #0d0d0d;
+  --page: #0a0a0c;
   --surface: #1a1a19;
   --surface-2: #232322;
   --border: rgba(255, 255, 255, 0.10);
   --border-strong: rgba(255, 255, 255, 0.18);
 
-  --ink: #ffffff;
+  --ink: #e8e8ea;
   --ink-2: #c3c2b7;
   --muted: #898781;
   --grid: #2c2c2a;
   --baseline: #383835;
 
+  /* Purple is reserved for the ONE primary action and active-toggle states --
+     everything else (labels, borders, slider thumbs, badges) stays grayscale
+     so the accent still means something when it shows up. */
   --violet: #9085e9;
   --violet-deep: #4a3aa7;
   --violet-wash: rgba(144, 133, 233, 0.14);
@@ -37,7 +40,9 @@
 
   --radius: 14px;
   --radius-sm: 8px;
+  --radius-sharp: 4px; /* buttons + toggles: sharp, not pill-shaped */
   --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 * { box-sizing: border-box; }
@@ -86,6 +91,19 @@ input:focus, textarea:focus, select:focus {
 }
 
 .hidden { display: none !important; }
+
+/* Numbers read as a real data tool in mono, not marketing copy in sans --
+   applies to every chart label (all of charts.js draws plain SVG <text>,
+   inheriting this) plus any element opting in via .num. */
+svg text {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
 
 .hint {
   color: var(--muted);

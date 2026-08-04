@@ -17,3 +17,4 @@ features_v2.csv
 
 .streamlit/secrets.toml
 .DS_Store
+.vercel
