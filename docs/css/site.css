@@ -1,0 +1,364 @@
+/* New for the homepage restructure: sticky nav, hero stats/actions, the
+   "How it works" step list, "The data" stat tiles + bars + limits card, and
+   the footer. Reuses the existing dark/violet token set from base.css --
+   nothing here redefines a color, it only adds layout on top. */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px; /* keeps anchored sections clear of the sticky nav */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Sticky nav                                                              */
+/* ---------------------------------------------------------------------- */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(13, 13, 13, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-nav-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.98rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.brand-mark-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--violet) 0%, var(--violet-deep) 100%);
+  flex-shrink: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.6rem;
+}
+
+.nav-links a {
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--violet) 0%, var(--violet-deep) 100%);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.5rem 1.05rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px -8px rgba(144, 133, 233, 0.6);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Hero additions (stats + CTAs, appended inside the existing .brand)      */
+/* ---------------------------------------------------------------------- */
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+  margin: 1.9rem 0 2rem;
+}
+
+.hero-stat { text-align: center; }
+
+.hero-stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.hero-stat-label {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.cta-primary,
+.cta-secondary {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  transition: transform 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.cta-primary {
+  background: linear-gradient(135deg, var(--violet) 0%, var(--violet-deep) 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 24px -8px rgba(144, 133, 233, 0.55);
+}
+.cta-primary:hover { transform: translateY(-1px); }
+
+.cta-secondary {
+  border: 1px solid var(--border);
+  color: var(--ink-2);
+}
+.cta-secondary:hover { border-color: var(--border-strong); color: var(--ink); }
+
+/* ---------------------------------------------------------------------- */
+/* Shared section header                                                   */
+/* ---------------------------------------------------------------------- */
+.site-section {
+  padding: 4rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-head {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 2.25rem;
+}
+
+.section-title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  margin-top: 0.9rem;
+  line-height: 1.15;
+}
+
+.section-sub {
+  color: var(--ink-2);
+  font-size: 0.92rem;
+  margin-top: 0.75rem;
+  line-height: 1.55;
+}
+
+/* ---------------------------------------------------------------------- */
+/* How it works -- numbered step cards                                     */
+/* ---------------------------------------------------------------------- */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.1rem;
+  align-items: start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.15rem 1.35rem;
+}
+
+.step-num {
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 50%;
+  background: var(--violet-wash);
+  border: 1px solid rgba(144, 133, 233, 0.35);
+  color: var(--violet);
+  font-weight: 800;
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-title {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}
+
+.step-body {
+  color: var(--ink-2);
+  font-size: 0.87rem;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------------- */
+/* The data -- stat tiles (reuses .tile from results.css), bars, limits    */
+/* ---------------------------------------------------------------------- */
+.data-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 640px) {
+  .data-tiles { grid-template-columns: 1fr 1fr; }
+}
+
+.data-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-bottom: 2rem;
+}
+
+.data-bar-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 76px;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+@media (max-width: 560px) {
+  .data-bar-row { grid-template-columns: 96px 1fr 60px; }
+}
+
+.data-bar-label {
+  color: var(--ink-2);
+  font-size: 0.82rem;
+}
+
+.data-bar-track {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.data-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--violet-deep), var(--violet));
+}
+
+.data-bar-value {
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.data-bars-note {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin: -0.3rem 0 2rem;
+}
+
+.limits-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--critical);
+  border-radius: var(--radius);
+  padding: 1.3rem 1.5rem;
+}
+
+.limits-card h3 {
+  font-size: 0.92rem;
+  margin-bottom: 0.9rem;
+}
+
+.limits-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.limits-list li {
+  font-size: 0.86rem;
+  color: var(--ink-2);
+  padding-left: 1.2rem;
+  position: relative;
+  line-height: 1.55;
+}
+
+.limits-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--critical);
+}
+
+.limits-list b { color: var(--ink); }
+
+/* ---------------------------------------------------------------------- */
+/* Predictor section intro                                                 */
+/* ---------------------------------------------------------------------- */
+.predictor-block { padding-top: 4rem; border-top: 1px solid var(--border); }
+.predictor-block .form-section { margin-top: 0.5rem; }
+
+/* ---------------------------------------------------------------------- */
+/* Footer                                                                   */
+/* ---------------------------------------------------------------------- */
+.site-footer {
+  text-align: center;
+  margin-top: 4rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.site-footer p {
+  max-width: 56ch;
+  margin: 0 auto 0.6rem;
+  line-height: 1.55;
+}
+
+.site-footer a { color: var(--ink-2); }
+.site-footer a:hover { color: var(--violet); }
