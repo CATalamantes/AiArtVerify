@@ -7,6 +7,10 @@ const App = {
   selectedTags: new Set(),
   horizonHours: 48,
 };
+// `const` doesn't attach to `window` in a classic script, but main.js's
+// renderHeroChart() checks `window.App` -- expose it explicitly so that
+// check actually sees the object instead of always bailing out.
+window.App = App;
 
 const els = {
   category: document.getElementById("category"),
