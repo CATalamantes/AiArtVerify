@@ -7,7 +7,7 @@
 <meta name="description" content="A pre-publish YouTube performance predictor trained on 6,668 videos that all made Trending.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/form.css">
 <link rel="stylesheet" href="css/results.css">
@@ -15,6 +15,20 @@
 <link rel="stylesheet" href="css/landing.css">
 </head>
 <body>
+
+<!-- ===================== NAV ===================== -->
+<div class="nav">
+  <a href="#" class="nav-brand">
+    <span class="nav-mark"><span class="up">▲</span><span class="down">▼</span></span>
+    Hit or Flop
+  </a>
+  <nav class="nav-links">
+    <a href="#predictor" data-focus="title">Predictor</a>
+    <a href="#methodology">How it works</a>
+    <a href="#data">The data</a>
+    <a href="#predictor" class="btn btn-primary" data-focus="title">Try it free</a>
+  </nav>
+</div>
 
 <!-- ===================== HERO ===================== -->
 <header class="hero" id="hero">
@@ -28,10 +42,25 @@
         you'd top that pack or scrape the bottom of it.
       </p>
       <div class="hero-actions">
-        <a href="#predictor" class="btn btn-primary" data-focus="title">Try the Predictor</a>
-        <a href="#methodology" class="btn btn-ghost">How it works</a>
+        <a href="#predictor" class="btn btn-primary" data-focus="title">Predict my video</a>
+        <a href="#methodology" class="btn btn-ghost">See how it works</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value">6,668</div>
+          <div class="hero-stat-label">trending videos analyzed</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">109</div>
+          <div class="hero-stat-label">countries in training set</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">9</div>
+          <div class="hero-stat-label">signals scored per video</div>
+        </div>
       </div>
     </div>
+    <div class="hero-chart-backdrop" aria-hidden="true"></div>
     <div class="hero-chart-wrap" aria-hidden="true">
       <svg id="hero-chart-svg" viewBox="0 0 520 380" preserveAspectRatio="none"></svg>
     </div>
@@ -41,6 +70,11 @@
 <!-- ===================== PREDICTOR ===================== -->
 <section id="predictor" class="section predictor-section">
   <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">The predictor</span>
+      <h2 class="section-title">Fill in what you've got, see where you'd land</h2>
+      <p class="section-sub">Scored against 6,668 videos that all made Trending, so average here is elite everywhere else.</p>
+    </div>
 
     <!-- ===================== INPUT (visible on load) ===================== -->
     <section id="form-section" class="form-section">
@@ -208,6 +242,110 @@
 
   </div>
 </section>
+
+<!-- ===================== METHODOLOGY ===================== -->
+<section id="methodology" class="section">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">A model built from real trending data</h2>
+      <p class="section-sub">We reverse-engineered what separates videos that trend from videos that don't, then scored nine weighted signals against it.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-title">Collect</div>
+        <div class="step-body">6,668 trending videos pulled across 109 countries, with full metadata and performance stats.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-title">Extract signals</div>
+        <div class="step-body">Title, tags, description, length, publish timing, category and channel authority at time of upload.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-title">Weight &amp; score</div>
+        <div class="step-body">Each signal is weighted against outcomes in the training set to produce a single 0–100 score.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-title">Predict &amp; advise</div>
+        <div class="step-body">The score maps to a percentile, a view-growth curve, best timing, and specific changes to make.</div>
+      </div>
+    </div>
+
+    <div class="signals-panel">
+      <div>
+        <div class="signals-panel-title">The signals we score</div>
+        <div class="signal-row"><span>Title strength</span><div class="signal-bar"><div class="signal-bar-fill" style="width: 90%;"></div></div></div>
+        <div class="signal-row"><span>Tag coverage</span><div class="signal-bar"><div class="signal-bar-fill" style="width: 74%;"></div></div></div>
+        <div class="signal-row"><span>Description depth</span><div class="signal-bar"><div class="signal-bar-fill" style="width: 58%;"></div></div></div>
+        <div class="signal-row"><span>Publish timing</span><div class="signal-bar"><div class="signal-bar-fill" style="width: 62%;"></div></div></div>
+        <div class="signal-row"><span>Channel authority</span><div class="signal-bar"><div class="signal-bar-fill" style="width: 82%;"></div></div></div>
+      </div>
+      <div class="signal-chart" aria-hidden="true">
+        <div class="signal-chart-bar" style="height: 40%;"></div>
+        <div class="signal-chart-bar" style="height: 65%;"></div>
+        <div class="signal-chart-bar is-peak" style="height: 100%;"></div>
+        <div class="signal-chart-bar" style="height: 50%;"></div>
+        <div class="signal-chart-bar" style="height: 78%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DATA / LIMITATIONS ===================== -->
+<section id="data" class="section">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">About the data</span>
+      <h2 class="section-title">What this model can, and can't, tell you</h2>
+      <p class="section-sub">Hit or Flop is a directional signal, not a guarantee. Know the limits before you lean on it.</p>
+    </div>
+
+    <div class="limits-grid">
+      <div class="limit-card">
+        <div class="limit-title"><span class="dot">●</span>Trending ≠ typical</div>
+        <div class="limit-body">The training set is drawn from videos that reached each country's trending page — a biased sample skewed toward already-successful content.</div>
+      </div>
+      <div class="limit-card">
+        <div class="limit-title"><span class="dot">●</span>Correlation, not causation</div>
+        <div class="limit-body">Metadata patterns are associated with trending outcomes, but that doesn't mean changing your title alone will make a video hit.</div>
+      </div>
+      <div class="limit-card">
+        <div class="limit-title"><span class="dot">●</span>No thumbnail or content signal</div>
+        <div class="limit-body">The model only reads metadata submitted before upload, so it can't see your thumbnail, edit quality, or the video itself.</div>
+      </div>
+      <div class="limit-card">
+        <div class="limit-title"><span class="dot">●</span>A snapshot, not a stream</div>
+        <div class="limit-body">Trends and algorithm behavior shift over time; the dataset reflects a fixed collection window, not real-time platform behavior.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="contact-card">
+      <h2 class="contact-title">Questions about the model?</h2>
+      <p class="contact-body">Open an issue on GitHub — feedback, partnership ideas, or just curious how the scoring works.</p>
+      <a href="https://github.com/CATalamantes/HitOrFlop/issues" class="btn btn-primary" target="_blank" rel="noopener">Open an issue</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-brand">
+      <span class="nav-mark" style="width: 22px; height: 22px;"><span class="up">▲</span><span class="down">▼</span></span>
+      Hit or Flop
+    </div>
+    <div class="footer-note">Predictions are directional estimates, not guarantees.</div>
+  </div>
+</footer>
 
 <script src="js/api.js"></script>
 <script src="js/charts.js"></script>

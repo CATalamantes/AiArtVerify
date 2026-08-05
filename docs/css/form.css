@@ -2,7 +2,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1.75rem;
+  padding: 2rem;
 }
 
 .field { margin-bottom: 1.1rem; }
@@ -36,7 +36,7 @@ input[type="range"] {
   height: 6px;
   background: var(--grid);
   border: none;
-  accent-color: var(--ink-2);
+  accent-color: var(--violet);
 }
 
 #publish-hour-value {
@@ -48,23 +48,23 @@ input[type="range"] {
 /* Segmented control (horizon picker) */
 .segmented {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .segmented-option {
   flex: 1;
-  background: var(--surface-2);
+  background: var(--page);
   border: 1px solid var(--border);
   color: var(--ink-2);
   border-radius: var(--radius-sharp);
-  padding: 0.55rem 0.5rem;
+  padding: 0.6rem 0.5rem;
   font-size: 0.88rem;
   font-weight: 600;
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 
-/* Solid fill, not a translucent glow-outline -- this IS an active-toggle
-   state, so it's the one place besides the submit button that keeps purple. */
+/* Solid fill -- this IS an active-toggle state, so it's the one place
+   besides the submit button that keeps the accent color. */
 .segmented-option.is-selected {
   background: var(--violet);
   border-color: var(--violet);
@@ -85,11 +85,11 @@ input[type="range"] {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  background: var(--surface-2);
+  background: var(--page);
   border: 1px solid var(--border);
   color: var(--ink-2);
   border-radius: 999px;
-  padding: 0.28rem 0.7rem;
+  padding: 0.3rem 0.75rem;
   font-size: 0.8rem;
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s, color 0.15s;
@@ -102,31 +102,31 @@ input[type="range"] {
 .chip.is-selected {
   background: var(--violet-wash);
   border-color: var(--violet);
-  color: var(--violet);
+  color: var(--violet-deep);
 }
 
 .chip .chip-lift {
   color: var(--muted);
   font-size: 0.72rem;
 }
-.chip.is-selected .chip-lift { color: var(--violet); opacity: 0.8; }
+.chip.is-selected .chip-lift { color: var(--violet-deep); opacity: 0.85; }
 
 .chip-remove {
   font-weight: 700;
   opacity: 0.7;
 }
 
-/* The one purple element in the whole form -- flat solid fill, sharp
-   corners, no gradient, no glow. Hover is a brightness shift, not a shadow
-   bloom, so it stays legible as "the button" rather than "the AI button". */
+/* The one accent-colored element in the whole form -- flat solid fill, no
+   gradient, no glow. Hover is a brightness shift, not a shadow bloom, so it
+   stays legible as "the button" rather than "the AI button". */
 .submit-btn {
   position: relative;
   width: 100%;
   margin-top: 1.5rem;
-  padding: 0.95rem 1rem;
+  padding: 1rem 1rem;
   border: none;
   border-radius: var(--radius-sharp);
-  background: var(--violet-deep);
+  background: var(--violet);
   color: #ffffff;
   font-size: 1rem;
   font-weight: 700;
@@ -134,7 +134,7 @@ input[type="range"] {
   transition: filter 0.15s;
 }
 
-.submit-btn:hover { filter: brightness(1.15); }
+.submit-btn:hover { filter: brightness(1.08); }
 
 .submit-btn:disabled {
   opacity: 0.7;
@@ -146,7 +146,7 @@ input[type="range"] {
   width: 16px;
   height: 16px;
   margin-left: 0.6rem;
-  border: 2px solid rgba(255, 255, 255, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.4);
   border-top-color: #fff;
   border-radius: 50%;
   vertical-align: -3px;
@@ -171,10 +171,10 @@ input[type="range"] {
   display: block;
   margin: 2rem auto 0;
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-strong);
   color: var(--ink-2);
   border-radius: 999px;
-  padding: 0.55rem 1.2rem;
+  padding: 0.6rem 1.3rem;
   font-size: 0.85rem;
 }
-.edit-again-btn:hover { border-color: var(--border-strong); color: var(--ink); }
+.edit-again-btn:hover { border-color: var(--ink-2); color: var(--ink); }

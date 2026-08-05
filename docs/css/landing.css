@@ -1,11 +1,11 @@
-/* New landing-page structure around the existing predictor.
-   Reuses every token from base.css (colors, radius, font) -- nothing here
-   redefines a color. Sections are full-bleed with their own background;
-   .section-inner is the 880px reading width used throughout the old page,
-   kept identical so the predictor form doesn't change proportions.
+/* Landing-page chrome around the existing predictor: nav, hero, section
+   scaffolding, methodology + data-limits static content. Reuses every
+   token from base.css (colors, radius, font) -- nothing here redefines a
+   color. .section-inner is the 880px reading width the predictor form
+   uses, kept identical so it doesn't change proportions.
 
-   Design direction: dark, techy/analytics-dashboard (Stripe/Linear), flat
-   solid accents -- no gradients, no glow/blur shadows. */
+   Design direction: light, Space Grotesk/Inter, oklch palette -- matches
+   the Claude Design export ("Hit or Flop Landing"). */
 
 .section-inner {
   max-width: 880px;
@@ -16,21 +16,16 @@
 .section {
   padding: 4.5rem 0;
   border-top: 1px solid var(--border);
+  position: relative;
 }
 
-/* Grayscale by design -- purple is spent entirely on the primary action and
-   active-toggle states, so a label pill doesn't compete with it. */
 .eyebrow {
   display: inline-block;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-2);
-  background: transparent;
-  border: 1px solid var(--border-strong);
-  border-radius: 999px;
-  padding: 0.3rem 0.8rem;
+  color: var(--violet-deep);
 }
 
 .section-head {
@@ -40,11 +35,12 @@
 }
 
 .section-title {
+  font-family: var(--font-display);
   font-size: clamp(1.6rem, 4vw, 2.15rem);
-  font-weight: 800;
-  letter-spacing: -0.015em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.15;
-  margin-top: 0.9rem;
+  margin-top: 0.6rem;
   color: var(--ink);
 }
 
@@ -55,8 +51,8 @@
   margin-top: 0.75rem;
 }
 
-/* Flat buttons -- solid fill, sharp corners, no gradient, no glow. Hover is
-   a brightness shift, never a shadow bloom. */
+/* Flat buttons -- solid fill, no gradient, no glow. Hover is a brightness
+   shift, never a shadow bloom. */
 .btn {
   display: inline-block;
   padding: 0.85rem 1.7rem;
@@ -69,31 +65,86 @@
 }
 
 .btn-primary {
-  background: var(--violet-deep);
+  background: var(--violet);
   color: #ffffff;
 }
-.btn-primary:hover { filter: brightness(1.15); }
+.btn-primary:hover { filter: brightness(1.08); }
 
-/* Secondary action stays grayscale even on hover -- purple is reserved for
-   the one primary action per screen. */
 .btn-ghost {
   background: transparent;
   border-color: var(--border-strong);
-  color: var(--ink-2);
+  color: var(--ink);
 }
-.btn-ghost:hover { border-color: var(--ink-2); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--ink-2); }
 
 /* ---------------------------------------------------------------------- */
-/* Hero -- asymmetric: copy left, a real (ghost, low-opacity) histogram of  */
-/* the actual view-count distribution bleeding in from the right, instead  */
-/* of decorative grid/gradient chrome. Background is just --page --        */
-/* solid near-black, no separate hero-only shade.                          */
+/* Nav                                                                     */
+/* ---------------------------------------------------------------------- */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.4rem 1.25rem;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  position: relative;
+  flex-shrink: 0;
+}
+.nav-mark span {
+  position: absolute;
+  left: 50%;
+  font-size: 12px;
+  line-height: 1;
+}
+.nav-mark span.up { top: 40%; transform: translate(-50%, -100%); color: var(--good); }
+.nav-mark span.down { top: 60%; transform: translate(-50%, 0); color: var(--critical); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-links a:not(.btn) {
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: 14.5px;
+  font-weight: 500;
+}
+.nav-links a:not(.btn):hover { color: var(--ink); }
+
+.nav-links .btn { padding: 0.6rem 1.25rem; font-size: 14px; }
+
+/* ---------------------------------------------------------------------- */
+/* Hero -- asymmetric: copy left, a real (ghost) histogram of the actual   */
+/* view-count distribution bleeding in from the right. charts.js renders  */
+/* it in solid white, so it needs a dark backdrop panel to read against   */
+/* this light hero -- .hero-chart-backdrop supplies that, purely in CSS.  */
 /* ---------------------------------------------------------------------- */
 .hero {
   position: relative;
-  padding: 6rem 1.25rem 5.5rem;
+  padding: 3.5rem 1.25rem 4.5rem;
   overflow: hidden;
-  border-bottom: 1px solid var(--border);
 }
 
 .hero-inner {
@@ -108,16 +159,17 @@
 .hero-copy {
   position: relative;
   z-index: 2;
-  max-width: 620px;
+  max-width: 600px;
   text-align: left;
 }
 
 .hero-title {
-  font-size: clamp(2.3rem, 5.4vw, 3.4rem);
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 5vw, 3.1rem);
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.1;
-  margin: 1.2rem 0 1.3rem;
+  margin: 1rem 0 1.1rem;
   color: var(--ink);
   text-wrap: balance;
 }
@@ -133,18 +185,27 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.9rem;
-  margin-top: 2.3rem;
+  margin-top: 2rem;
 }
 
-/* The ghost chart: absolutely positioned, bleeding off the right edge,
-   behind the copy z-order-wise. Real data (dist_log_views from /reference),
-   rendered by charts.js's renderGhostHistogram -- not an illustration. */
+.hero-chart-backdrop {
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  right: -4rem;
+  width: 58%;
+  z-index: 0;
+  background: radial-gradient(ellipse 90% 80% at 60% 50%, oklch(0.28 0.03 260), oklch(0.22 0.02 260) 70%);
+  border-radius: 28px;
+  pointer-events: none;
+}
+
 .hero-chart-wrap {
   position: absolute;
-  top: -1rem;
-  bottom: -1rem;
-  right: -3rem;
-  width: 56%;
+  top: 8%;
+  bottom: 8%;
+  right: -4rem;
+  width: 58%;
   z-index: 1;
   pointer-events: none;
 }
@@ -152,13 +213,239 @@
 .hero-chart-wrap svg {
   width: 100%;
   height: 100%;
-  opacity: 0.16;
+  opacity: 0.55;
 }
 
 @media (max-width: 860px) {
-  .hero-chart-wrap { display: none; }
+  .hero-chart-wrap, .hero-chart-backdrop { display: none; }
 }
 
 @media (max-width: 560px) {
-  .hero { padding: 4.5rem 1.25rem 3.25rem; }
+  .hero { padding: 2.75rem 1.25rem 3rem; }
+}
+
+.hero-stats {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 3rem;
+  margin-top: 3rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
+  max-width: 600px;
+}
+
+.hero-stat-value {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.hero-stat-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Methodology                                                             */
+/* ---------------------------------------------------------------------- */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.1rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 760px) {
+  .steps-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .steps-grid { grid-template-columns: 1fr; }
+}
+
+.step-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.35rem;
+}
+
+.step-num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--violet);
+  font-weight: 700;
+  margin-bottom: 0.65rem;
+}
+
+.step-title {
+  font-weight: 700;
+  font-size: 15.5px;
+  margin-bottom: 0.4rem;
+  color: var(--ink);
+}
+
+.step-body {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+.signals-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .signals-panel { grid-template-columns: 1fr; }
+}
+
+.signals-panel-title {
+  font-weight: 700;
+  font-size: 16.5px;
+  margin-bottom: 1rem;
+  color: var(--ink);
+}
+
+.signal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 0.85rem;
+}
+
+.signal-row span:first-child { color: var(--ink-2); }
+
+.signal-bar {
+  width: 140px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.signal-bar-fill {
+  height: 100%;
+  background: var(--violet);
+}
+
+.signal-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  height: 160px;
+}
+
+.signal-chart-bar {
+  width: 26px;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(var(--violet), var(--violet-deep));
+}
+.signal-chart-bar.is-peak {
+  background: linear-gradient(var(--good), oklch(0.5 0.15 145));
+}
+
+/* ---------------------------------------------------------------------- */
+/* Data / limitations                                                      */
+/* ---------------------------------------------------------------------- */
+.limits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+}
+
+@media (max-width: 640px) {
+  .limits-grid { grid-template-columns: 1fr; }
+}
+
+.limit-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.limit-title {
+  font-weight: 700;
+  font-size: 15.5px;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink);
+}
+
+.limit-title .dot { color: var(--critical); }
+
+.limit-body {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Contact + footer                                                        */
+/* ---------------------------------------------------------------------- */
+.contact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3.25rem;
+  text-align: center;
+}
+
+.contact-title {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.7rem;
+  color: var(--ink);
+}
+
+.contact-body {
+  color: var(--ink-2);
+  font-size: 1rem;
+  max-width: 480px;
+  margin: 0 auto 1.7rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 1.25rem;
+}
+
+.site-footer-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.footer-note {
+  font-size: 13px;
+  color: var(--muted);
 }

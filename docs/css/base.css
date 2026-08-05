@@ -1,48 +1,48 @@
-/* Reset + design tokens. Dark theme only, by deliberate choice (matches the
-   reference mockups) -- see the dataviz palette this reuses without change:
-   status colors (verdict bands) and the sequential blue ramp (heatmap) are
-   the same validated slots used throughout this project; violet is the
-   brand accent (buttons/headline/growth curve), chosen because it's a
-   categorical slot the status palette was specifically designed never to
-   collide with. */
+/* Reset + design tokens. Light theme, matching the Claude Design export
+   (oklch palette, Space Grotesk headings, Inter body). Custom property
+   NAMES below are load-bearing: results.js reads --critical/--serious/
+   --warning/--good/--violet via getComputedStyle to color the verdict and
+   gauge, so keep the names even if you retune the values. */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --page: #0a0a0c;
-  --surface: #1a1a19;
-  --surface-2: #232322;
-  --border: rgba(255, 255, 255, 0.10);
-  --border-strong: rgba(255, 255, 255, 0.18);
+  --page: oklch(0.99 0.005 260);
+  --surface: oklch(0.97 0.008 260);
+  --surface-2: oklch(0.995 0.003 260);
+  --border: oklch(0.88 0.012 260);
+  --border-strong: oklch(0.8 0.012 260);
 
-  --ink: #e8e8ea;
-  --ink-2: #c3c2b7;
-  --muted: #898781;
-  --grid: #2c2c2a;
-  --baseline: #383835;
+  --ink: oklch(0.22 0.02 260);
+  --ink-2: oklch(0.45 0.02 260);
+  --muted: oklch(0.6 0.02 260);
+  --grid: oklch(0.88 0.012 260);
+  --baseline: oklch(0.75 0.012 260);
 
-  /* Purple is reserved for the ONE primary action and active-toggle states --
-     everything else (labels, borders, slider thumbs, badges) stays grayscale
-     so the accent still means something when it shows up. */
-  --violet: #9085e9;
-  --violet-deep: #4a3aa7;
-  --violet-wash: rgba(144, 133, 233, 0.14);
+  /* Blue is reserved for the ONE primary action and active-toggle states --
+     everything else stays grayscale so the accent still means something
+     when it shows up. Variable is still called --violet for compatibility
+     with results.js's fallback lookup; the value is the design's blue. */
+  --violet: oklch(0.75 0.15 220);
+  --violet-deep: oklch(0.6 0.16 220);
+  --violet-wash: oklch(0.75 0.15 220 / 0.14);
 
-  --good: #0ca30c;      /* VIRAL */
-  --warning: #fab219;   /* HIT */
-  --serious: #ec835a;   /* MID */
-  --critical: #d03b3b;  /* FLOP */
+  --good: oklch(0.62 0.13 145);      /* VIRAL */
+  --warning: oklch(0.68 0.16 70);    /* HIT */
+  --serious: oklch(0.68 0.16 45);    /* MID */
+  --critical: oklch(0.62 0.2 25);    /* FLOP */
 
-  --seq-1: #cde2fb;
-  --seq-3: #6da7ec;
-  --seq-5: #256abf;
-  --seq-7: #0d366b;
+  --seq-1: oklch(0.92 0.03 250);
+  --seq-3: oklch(0.78 0.09 245);
+  --seq-5: oklch(0.6 0.13 245);
+  --seq-7: oklch(0.4 0.14 250);
 
-  --radius: 14px;
+  --radius: 16px;
   --radius-sm: 8px;
-  --radius-sharp: 4px; /* buttons + toggles: sharp, not pill-shaped */
-  --font: system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --radius-sharp: 10px;
+  --font: 'Inter', system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: 'Space Grotesk', var(--font);
+  --font-mono: 'Space Grotesk', var(--font);
 }
 
 * { box-sizing: border-box; }
@@ -77,7 +77,7 @@ input, textarea, select {
   font-family: inherit;
   font-size: 0.95rem;
   color: var(--ink);
-  background: var(--surface-2);
+  background: var(--page);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0.6rem 0.75rem;
@@ -92,7 +92,7 @@ input:focus, textarea:focus, select:focus {
 
 .hidden { display: none !important; }
 
-/* Numbers read as a real data tool in mono, not marketing copy in sans --
+/* Numbers get the display face (Space Grotesk) with tabular figures --
    applies to every chart label (all of charts.js draws plain SVG <text>,
    inheriting this) plus any element opting in via .num. */
 svg text {
@@ -121,43 +121,4 @@ svg text {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-}
-
-/* ---------------------------------------------------------------------- */
-/* Header                                                                  */
-/* ---------------------------------------------------------------------- */
-.brand {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.badge {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--violet);
-  background: var(--violet-wash);
-  border: 1px solid rgba(144, 133, 233, 0.35);
-  border-radius: 999px;
-  padding: 0.3rem 0.8rem;
-  margin-bottom: 1rem;
-}
-
-.title {
-  font-size: clamp(2rem, 5vw, 2.9rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-
-.accent { color: var(--violet); }
-.accent-flop { color: var(--critical); }
-
-.tagline {
-  color: var(--ink-2);
-  font-size: 0.95rem;
-  max-width: 60ch;
-  margin: 0.85rem auto 0;
 }
