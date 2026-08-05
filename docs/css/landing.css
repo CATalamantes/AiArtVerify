@@ -147,19 +147,23 @@
   overflow: hidden;
 }
 
+/* Grid, not flex-plus-absolute: the copy column and the chart column each
+   get a real track, so the browser reserves space for both and the chart
+   panel can never encroach on the text -- no magic-number tuning needed. */
 .hero-inner {
   max-width: 1180px;
   margin: 0 auto;
-  position: relative;
   min-height: 380px;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: minmax(0, 600px) 1fr;
+  align-items: stretch;
+  gap: 2.5rem;
 }
 
 .hero-copy {
-  position: relative;
-  z-index: 2;
-  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: left;
 }
 
@@ -188,12 +192,17 @@
   margin-top: 2rem;
 }
 
+.hero-chart-col {
+  position: relative;
+  min-width: 0;
+}
+
 .hero-chart-backdrop {
   position: absolute;
   top: 8%;
   bottom: 8%;
+  left: 0;
   right: -4rem;
-  width: 58%;
   z-index: 0;
   background: radial-gradient(ellipse 90% 80% at 60% 50%, oklch(0.28 0.03 260), oklch(0.22 0.02 260) 70%);
   border-radius: 28px;
@@ -204,8 +213,8 @@
   position: absolute;
   top: 8%;
   bottom: 8%;
+  left: 0;
   right: -4rem;
-  width: 58%;
   z-index: 1;
   pointer-events: none;
 }
@@ -217,7 +226,8 @@
 }
 
 @media (max-width: 860px) {
-  .hero-chart-wrap, .hero-chart-backdrop { display: none; }
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-chart-col { display: none; }
 }
 
 @media (max-width: 560px) {
