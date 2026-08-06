@@ -1,5 +1,24 @@
 .results-section { margin-top: 1.5rem; }
 
+/* Empty-state placeholder shown before the first prediction -- pure CSS
+   sibling toggle, no JS needed: results-section carries .hidden until
+   submit, and main.js re-adds it on "Edit and try again", so this just
+   mirrors that state. */
+.results-placeholder {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 60px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14.5px;
+  margin-top: 1.5rem;
+}
+
+#results-section:not(.hidden) ~ .results-placeholder {
+  display: none;
+}
+
 .verdict-row {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
@@ -15,8 +34,14 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1.5rem 1.6rem;
 }
+
+/* Padding values match the reference per card type exactly, not a single
+   shared number -- verdict/gauge/distribution/growth/heatmap all use 28px,
+   drivers/advice use 26px, tags/category use 22px. */
+.verdict-card, .gauge-card, .chart-card { padding: 28px; }
+.narrative-card, .advice-card { padding: 26px; }
+.tags-card, .category-card { padding: 22px; }
 
 .verdict-card {
   text-align: center;
@@ -82,7 +107,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1.1rem 1.2rem;
+  padding: 22px;
 }
 
 .tile-label {

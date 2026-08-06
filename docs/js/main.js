@@ -20,7 +20,44 @@ document.addEventListener("DOMContentLoaded", () => {
       window.setTimeout(() => field && field.focus({ preventScroll: true }), 550);
     });
   });
+
+  initStickyNav();
 });
+
+// Nav hides while scrolling down (so it doesn't sit over the predictor form/
+// results), reappears the moment you scroll up even a little, and picks up
+// a background/blur once it's no longer over the transparent hero so nav
+// links stay legible against whatever section is scrolled underneath.
+function initStickyNav() {
+  const nav = document.getElementById("site-nav");
+  const brand = document.getElementById("nav-brand");
+  if (!nav) return;
+
+  let lastY = window.scrollY;
+  const HIDE_AFTER_PX = 80;
+
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY;
+    nav.classList.toggle("nav-scrolled", y > 10);
+    if (y > lastY && y > HIDE_AFTER_PX) {
+      nav.classList.add("nav-hidden");
+    } else {
+      nav.classList.remove("nav-hidden");
+    }
+    lastY = y;
+  }, { passive: true });
+
+  if (brand) {
+    const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+    brand.addEventListener("click", scrollToTop);
+    brand.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        scrollToTop();
+      }
+    });
+  }
+}
 
 async function onSubmit(e) {
   e.preventDefault();

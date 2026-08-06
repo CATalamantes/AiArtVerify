@@ -50,11 +50,20 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--page);
   color: var(--ink);
   font-family: var(--font);
   font-size: 16px;
   line-height: 1.5;
+}
+
+/* Gradient mesh from the Claude Design reference, applied to the page as a
+   whole (it wrapped everything in the reference's single outer div). */
+body {
+  background:
+    radial-gradient(ellipse 1400px 1000px at 85% 15%, oklch(0.42 0.14 300 / 0.5), transparent 60%),
+    radial-gradient(ellipse 1100px 800px at 95% 45%, oklch(0.55 0.16 20 / 0.35), transparent 55%),
+    radial-gradient(ellipse 900px 700px at 70% 65%, oklch(0.45 0.12 280 / 0.35), transparent 55%),
+    var(--page);
 }
 
 .page {

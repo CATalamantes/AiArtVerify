@@ -72,6 +72,21 @@ function escapeHtml(s) {
 
 /* -------------------------- tag chip picker ---------------------------- */
 
+// Exact on/off colors from the Claude Design reference's suggestedTags binding
+// (Hit or Flop Landing.dc.html renderVals()) -- kept as literal oklch values,
+// not the --border/--ink-2 tokens, because those tokens are tuned for card
+// borders (0.88 lightness) and don't match the reference's control-level
+// border (0.85) or off-state text (0.4) used specifically for chips.
+function chipStyle(isOn) {
+  const bg = isOn ? "oklch(0.75 0.15 220)" : "oklch(0.97 0.008 260)";
+  const color = isOn ? "oklch(0.99 0.005 260)" : "oklch(0.4 0.02 260)";
+  const border = isOn ? "oklch(0.75 0.15 220)" : "oklch(0.85 0.012 260)";
+  return `display: inline-flex; align-items: center; gap: 6px; background: ${bg}; color: ${color}; border: 1px solid ${border}; border-radius: 999px; padding: 6px 12px; font-size: 12.5px; cursor: pointer; font-family: inherit;`;
+}
+function chipWeightColor(isOn) {
+  return isOn ? "oklch(0.9 0.03 220)" : "oklch(0.6 0.02 260)";
+}
+
 async function loadTagPool(category) {
   els.tagChipPool.innerHTML = `<span class="hint">Loading tags…</span>`;
   const { tags } = await Api.getTags(category, 20);
@@ -79,8 +94,10 @@ async function loadTagPool(category) {
   tags.forEach((t) => {
     const chip = document.createElement("button");
     chip.type = "button";
-    chip.className = "chip" + (App.selectedTags.has(t.tag) ? " is-selected" : "");
-    chip.innerHTML = `${escapeHtml(t.tag)} <span class="chip-lift">${t.lift.toFixed(1)}&times;</span>`;
+    const isOn = App.selectedTags.has(t.tag);
+    chip.className = "chip" + (isOn ? " is-selected" : "");
+    chip.style.cssText = chipStyle(isOn);
+    chip.innerHTML = `${escapeHtml(t.tag)} <span style="font-size: 11px; color: ${chipWeightColor(isOn)};">${t.lift.toFixed(1)}&times;</span>`;
     chip.addEventListener("click", () => toggleTag(t.tag, chip));
     els.tagChipPool.appendChild(chip);
   });
@@ -92,10 +109,16 @@ async function loadTagPool(category) {
 function toggleTag(tag, chipEl) {
   if (App.selectedTags.has(tag)) {
     App.selectedTags.delete(tag);
-    if (chipEl) chipEl.classList.remove("is-selected");
+    if (chipEl) {
+      chipEl.classList.remove("is-selected");
+      chipEl.style.cssText = chipStyle(false);
+    }
   } else {
     App.selectedTags.add(tag);
-    if (chipEl) chipEl.classList.add("is-selected");
+    if (chipEl) {
+      chipEl.classList.add("is-selected");
+      chipEl.style.cssText = chipStyle(true);
+    }
   }
   renderSelectedTags();
 }
@@ -105,13 +128,17 @@ function renderSelectedTags() {
   App.selectedTags.forEach((tag) => {
     const chip = document.createElement("span");
     chip.className = "chip is-selected";
-    chip.innerHTML = `${escapeHtml(tag)} <span class="chip-remove">&times;</span>`;
+    chip.style.cssText = chipStyle(true);
+    chip.innerHTML = `${escapeHtml(tag)} <span style="font-weight: 700; opacity: 0.85;">&times;</span>`;
     chip.addEventListener("click", () => {
       App.selectedTags.delete(tag);
       renderSelectedTags();
       // reflect removal in the pool chips too, if the tag is currently shown there
       els.tagChipPool.querySelectorAll(".chip").forEach((c) => {
-        if (c.textContent.trim().startsWith(tag)) c.classList.remove("is-selected");
+        if (c.textContent.trim().startsWith(tag)) {
+          c.classList.remove("is-selected");
+          c.style.cssText = chipStyle(false);
+        }
       });
     });
     els.tagChipSelected.appendChild(chip);
@@ -142,11 +169,25 @@ function onChannelSizeChange() {
 
 /* -------------------------- horizon segmented control ------------------- */
 
+// Exact on/off colors from the reference's windowOptions binding (opt() in
+// renderVals()) -- same reasoning as chipStyle() above.
+function segmentedColors(isOn) {
+  return {
+    background: isOn ? "oklch(0.75 0.15 220)" : "oklch(0.99 0.005 260)",
+    color: isOn ? "oklch(0.99 0.005 260)" : "oklch(0.4 0.02 260)",
+    borderColor: isOn ? "oklch(0.75 0.15 220)" : "oklch(0.85 0.012 260)",
+  };
+}
+
 function onHorizonClick(e) {
   const btn = e.target.closest(".segmented-option");
   if (!btn) return;
   App.horizonHours = Number(btn.dataset.value);
-  els.horizonGroup.querySelectorAll(".segmented-option").forEach((b) => b.classList.toggle("is-selected", b === btn));
+  els.horizonGroup.querySelectorAll(".segmented-option").forEach((b) => {
+    const isOn = b === btn;
+    b.classList.toggle("is-selected", isOn);
+    Object.assign(b.style, segmentedColors(isOn));
+  });
 }
 
 /* -------------------------- payload ------------------------------------- */

@@ -8,7 +8,7 @@
    the Claude Design export ("Hit or Flop Landing"). */
 
 .section-inner {
-  max-width: 880px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 1.25rem;
 }
@@ -84,7 +84,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1180px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 1.4rem 1.25rem;
 }
@@ -151,7 +151,7 @@
    get a real track, so the browser reserves space for both and the chart
    panel can never encroach on the text -- no magic-number tuning needed. */
 .hero-inner {
-  max-width: 1180px;
+  max-width: 1280px;
   margin: 0 auto;
   min-height: 380px;
   display: grid;
@@ -278,8 +278,8 @@
 .step-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.35rem;
+  border-radius: 14px;
+  padding: 24px;
 }
 
 .step-num {
@@ -307,7 +307,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1.75rem;
+  padding: 32px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2.5rem;
@@ -381,8 +381,8 @@
 .limit-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.5rem;
+  border-radius: 14px;
+  padding: 26px;
 }
 
 .limit-title {
@@ -410,7 +410,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 3.25rem;
+  padding: 56px;
   text-align: center;
 }
 
@@ -436,7 +436,7 @@
 }
 
 .site-footer-inner {
-  max-width: 1180px;
+  max-width: 1280px;
   margin: 0 auto;
   display: flex;
   align-items: center;

@@ -41,6 +41,10 @@ function renderResults(data, formSnapshot) {
     horizonHours: formSnapshot.horizon_hours,
   });
 
+  const HORIZON_LABEL = { 24: "24 hours", 48: "48 hours", 168: "7 days" };
+  document.getElementById("growth-note").textContent =
+    `Views projected across the ${HORIZON_LABEL[formSnapshot.horizon_hours] || formSnapshot.horizon_hours + " hours"} you selected.`;
+
   const dayIdx = new Date(formSnapshot.publish_date + "T00:00:00Z").getUTCDay();
   // JS getUTCDay(): 0=Sunday..6=Saturday; backend DAYS starts Monday=0 -- convert.
   const mondayFirstIdx = (dayIdx + 6) % 7;
@@ -53,7 +57,7 @@ function renderResults(data, formSnapshot) {
   const gainPts = Math.round(best_time.gain * 100);
   document.getElementById("best-time-note").textContent =
     gainPts > 0
-      ? `Peak: ${best_time.best_day} ${String(best_time.best_hour).padStart(2, "0")}:00 UTC — worth +${gainPts} points over your current slot.`
+      ? `Peak: ${best_time.best_day} ${String(best_time.best_hour).padStart(2, "0")}:00 UTC, worth +${gainPts} points over your current slot.`
       : `You're already at (or near) the best time for this video.`;
 
   renderNarrative(narrative);
@@ -94,8 +98,8 @@ function renderNarrative(lines) {
 function renderAdvice(recs) {
   const container = document.getElementById("advice-list");
   if (!recs.length) {
-    container.innerHTML = `<p class="advice-empty">No suggestion passed the cross-check for this video —
-      every tip has to be backed by both the model and the raw data before it shows up here, so an empty
+    container.innerHTML = `<p class="advice-empty">No suggestion passed the cross-check for this video.
+      Every tip has to be backed by both the model and the raw data before it shows up here, so an empty
       list means the honest answer is "nothing reliable to change."</p>`;
     return;
   }
@@ -113,10 +117,13 @@ function renderAdvice(recs) {
 function renderMissingTags(tags) {
   const container = document.getElementById("missing-tags-chips");
   if (!tags.length) {
-    container.innerHTML = `<span class="hint">No high-lift tags left for this category — you've got the good ones.</span>`;
+    container.innerHTML = `<span class="hint">No high-lift tags left for this category. You've got the good ones.</span>`;
     return;
   }
+  // Static chip look straight from the reference's missingTags binding
+  // (line 333 of the Claude Design reference) -- these don't toggle, so
+  // unlike the pool/selected chips there's no on/off state to compute.
   container.innerHTML = tags.map((t) => `
-    <span class="chip">${escapeHtml(t.tag)} <span class="chip-lift">${t.lift.toFixed(1)}&times;</span></span>
+    <span style="display: inline-flex; align-items: center; gap: 5px; background: oklch(0.99 0.005 260); border: 1px solid oklch(0.85 0.012 260); border-radius: 999px; padding: 5px 11px; font-size: 12px; color: oklch(0.4 0.02 260);">${escapeHtml(t.tag)} <span style="font-size: 10.5px; color: oklch(0.6 0.02 260);">${t.lift.toFixed(1)}&times;</span></span>
   `).join("");
 }

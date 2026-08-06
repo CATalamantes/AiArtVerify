@@ -3,23 +3,41 @@
    number + gauge become center stage -- matching the reference mockup's
    form -> result transition. */
 
-.results-section {
+/* Targets IDs, not classes -- #form-section/#results-section now carry the
+   reference's literal inline styles directly, and adding a .form-section/
+   .results-section class back on would also pull in form.css/results.css's
+   class-based card styling (background/border/padding), double-boxing the
+   already-inline-styled card underneath. */
+#results-section {
   opacity: 0;
   transform: translateY(12px);
   pointer-events: none;
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.results-section.is-visible {
+#results-section.is-visible {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
-.form-section {
+#form-section {
   transition: opacity 0.3s ease;
 }
 
-.form-section.is-collapsed {
+#form-section.is-collapsed {
   opacity: 0.55;
+}
+
+/* Floating decorative triangle accents -- exact keyframes from the Claude
+   Design reference (Hit or Flop Landing.dc.html). */
+@keyframes floatA { 0%,100% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(14px,-22px) rotate(12deg); } }
+@keyframes floatB { 0%,100% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(-18px,18px) rotate(-10deg); } }
+@keyframes floatC { 0%,100% { transform: translate(0,0); } 50% { transform: translate(10px,20px); } }
+
+.float-accent {
+  position: absolute;
+  pointer-events: none;
+  line-height: 1;
+  z-index: 1;
 }

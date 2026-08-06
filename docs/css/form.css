@@ -19,6 +19,18 @@
   .field-row { grid-template-columns: 1fr; }
 }
 
+/* Category / Length / Publish date / Publish hour, grouped as one row like
+   the reference -- separate modifier so the plain 2-col .field-row (Title |
+   Tags) is untouched. */
+.field-row-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 760px) {
+  .field-row-4 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .field-row-4 { grid-template-columns: 1fr; }
+}
+
 label {
   display: block;
   font-size: 0.85rem;
@@ -116,27 +128,15 @@ input[type="range"] {
   opacity: 0.7;
 }
 
-/* The one accent-colored element in the whole form -- flat solid fill, no
-   gradient, no glow. Hover is a brightness shift, not a shadow bloom, so it
-   stays legible as "the button" rather than "the AI button". */
-.submit-btn {
-  position: relative;
-  width: 100%;
-  margin-top: 1.5rem;
-  padding: 1rem 1rem;
-  border: none;
-  border-radius: var(--radius-sharp);
-  background: var(--violet);
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  transition: filter 0.15s;
-}
+/* #submit-btn now carries the reference's literal inline styles directly
+   (see index.html) -- these rules only add the hover/loading *behavior*
+   that isn't expressible as a static inline style, targeting the id so
+   nothing here fights the inline background/color/padding. */
+#submit-btn { position: relative; transition: filter 0.15s; }
 
-.submit-btn:hover { filter: brightness(1.08); }
+#submit-btn:hover { filter: brightness(1.08); }
 
-.submit-btn:disabled {
+#submit-btn:disabled {
   opacity: 0.7;
   cursor: wait;
 }
@@ -153,8 +153,8 @@ input[type="range"] {
   animation: spin 0.7s linear infinite;
 }
 
-.submit-btn.is-loading .submit-spinner { display: inline-block; }
-.submit-btn.is-loading .submit-label { opacity: 0.85; }
+#submit-btn.is-loading .submit-spinner { display: inline-block; }
+#submit-btn.is-loading .submit-label { opacity: 0.85; }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
